@@ -28,6 +28,11 @@ int livepatch_nop(struct expr_func *f, vec_expr_t args, void *c)
     return 0;
 }
 
+int livepatch_fib(int n)
+{
+    return 1;
+}
+
 /* clang-format off */
 static struct klp_func funcs[] = {
     {
@@ -38,6 +43,10 @@ static struct klp_func funcs[] = {
         .old_name = "user_func_nop_cleanup",
         .new_func = livepatch_nop_cleanup,
     },
+	{
+		.old_name = "kfib",
+		.new_func = livepatch_fib,
+	},
     {},
 };
 static struct klp_object objs[] = {

@@ -160,3 +160,5 @@ livepatch
 MathEx
 vec
 expr
+fibonacci
+kcalc
