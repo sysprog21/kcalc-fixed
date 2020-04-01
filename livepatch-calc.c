@@ -8,6 +8,8 @@
 
 #include "expression.h"
 
+#define unlikely(x) __builtin_expect((x), 0)
+
 MODULE_LICENSE("Dual MIT/GPL");
 MODULE_AUTHOR("National Cheng Kung University, Taiwan");
 MODULE_DESCRIPTION("Patch calc kernel module");
@@ -30,7 +32,22 @@ int livepatch_nop(struct expr_func *f, vec_expr_t args, void *c)
 
 int livepatch_fib(int n)
 {
-    return 1;
+    if (unlikely(!n))
+        return 0;
+
+    int a = 0, b = 1;
+    for (int i = 32 - __builtin_clz(n); i >= 0; i--) {
+        int t1 = a * (2 * b - a);
+        int t2 = b * b + a * a;
+        a = t1;
+        b = t2;
+        if (n & (1 << i)) {
+            t1 = a + b;
+            a = b;
+            b = t1;
+        }
+    }
+    return a;
 }
 
 /* clang-format off */

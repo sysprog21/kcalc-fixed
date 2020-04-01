@@ -116,12 +116,12 @@ noinline int user_func_nop(struct expr_func *f, vec_expr_t args, void *c)
     return 0;
 }
 
-int kfib(int n)
+noinline int kfib(int n)
 {
     return 0;
 }
 
-noinline int user_func_fib(struct expr_func *f, vec_expr_t args, void *c)
+int user_func_fib(struct expr_func *f, vec_expr_t args, void *c)
 {
     int n = expr_eval(&vec_nth(&args, 0));
     return kfib(n);
