@@ -8,8 +8,6 @@
 
 #include "expression.h"
 
-#define unlikely(x) __builtin_expect((x), 0)
-
 MODULE_LICENSE("Dual MIT/GPL");
 MODULE_AUTHOR("National Cheng Kung University, Taiwan");
 MODULE_DESCRIPTION("Patch calc kernel module");
