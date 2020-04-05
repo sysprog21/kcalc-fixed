@@ -194,7 +194,7 @@ static uint64_t expr_parse_number(const char *s, size_t len)
             return NAN_INT;
     }
 
-    static int pow10[] = {
+    const int pow10[] = {
         1,      10,      100,      1000,      10000,
         100000, 1000000, 10000000, 100000000, 1000000000,
     };
@@ -204,7 +204,6 @@ static uint64_t expr_parse_number(const char *s, size_t len)
         uint32_t mask = pow10[frac];
         int i = 31;
         sscanf(s, "%u.%u", &tmp, &ipt);
-        pr_alert("parse integer: %u", ipt);
         while (ipt && i) {
             ipt <<= 1;
             if (ipt >= mask) {
