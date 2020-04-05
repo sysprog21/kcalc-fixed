@@ -163,3 +163,5 @@ expr
 fibonacci
 kcalc
 noinline
+fixedp
+calc

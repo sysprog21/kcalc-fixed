@@ -26,7 +26,7 @@ static short size_of_message;
 static struct class *char_class = NULL;
 static struct device *char_dev = NULL;
 static char *msg_ptr = NULL;
-static int result = 0;
+static uint64_t result = 0;
 
 /* The prototype functions for the character driver */
 static int dev_open(struct inode *, struct file *);
@@ -61,12 +61,12 @@ static ssize_t dev_read(struct file *filep,
 
     memset(message, 0, sizeof(char) * BUFF_SIZE);
 
-    snprintf(message, 64, "%d\n", result);
+    snprintf(message, 64, "%lu\n", result);
     size_of_message = strlen(message);
 
     error_count = copy_to_user(buffer, message, size_of_message);
     if (error_count == 0) {
-        pr_info("size: %d result: %d\n", size_of_message, result);
+        pr_info("size: %d result: %llu\n", size_of_message, result);
         while (len && *msg_ptr) {
             error_count = put_user(*(msg_ptr++), buffer++);
             len--;
@@ -143,7 +143,7 @@ static void calc(void)
     }
 
     result = expr_eval(e);
-    pr_info("Result: %d\n", result);
+    pr_info("Result: %llu\n", result);
     expr_destroy(e, &vars);
 }
 

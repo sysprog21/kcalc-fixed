@@ -75,10 +75,10 @@ struct expr {
     int type;
     union {
         struct {
-            int value;
+            uint64_t value;
         } num;
         struct {
-            int *value;
+            uint64_t *value;
         } var;
         struct {
             vec_expr_t args;
@@ -120,7 +120,7 @@ struct expr_func *expr_func(struct expr_func *funcs, const char *s, size_t len);
  * Variables
  */
 struct expr_var {
-    int value;
+    uint64_t value;
     struct expr_var *next;
     char name[];
 };
@@ -133,7 +133,7 @@ struct expr_var *expr_var(struct expr_var_list *vars,
                           const char *s,
                           size_t len);
 
-int expr_eval(struct expr *e);
+uint64_t expr_eval(struct expr *e);
 
 #define EXPR_TOP (1 << 0)
 #define EXPR_TOPEN (1 << 1)
