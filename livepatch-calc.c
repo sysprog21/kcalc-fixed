@@ -58,10 +58,10 @@ static struct klp_func funcs[] = {
         .old_name = "user_func_nop_cleanup",
         .new_func = livepatch_nop_cleanup,
     },
-	{
-		.old_name = "kfib",
-		.new_func = livepatch_fib,
-	},
+    {
+        .old_name = "kfib",
+        .new_func = livepatch_fib,
+    },
     {},
 };
 static struct klp_object objs[] = {
