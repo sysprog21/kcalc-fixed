@@ -14,6 +14,13 @@ $(GIT_HOOKS):
 	@scripts/install-git-hooks
 	@echo
 
+load: calc.ko
+	sudo insmod calc.ko
+	sudo chmod 0666 /dev/calc
+
+unload:
+	sudo rmmod calc
+
 check: all
 	scripts/test.sh
 
