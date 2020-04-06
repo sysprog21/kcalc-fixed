@@ -272,9 +272,18 @@ static uint64_t mult(uint64_t a, uint64_t b)
     return result.data + ad + bc;
 }
 
-static int divid(uint64_t a, uint64_t b)
+static uint64_t divid(uint64_t a, uint64_t b)
 {
-    return (a << 32) / (b << 32);
+    uint64_t result = 0;
+    int shift = __builtin_ctzl(b);
+    b >>= shift;
+    result = a / b;
+
+    shift -= 32;
+    if (shift >= 0)
+        return result >> shift;
+    else
+        return result << (-shift);
 }
 
 static int remain(int a, int b)
