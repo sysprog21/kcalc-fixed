@@ -35,20 +35,6 @@ static uint64_t GET_FRAC(uint64_t n)
     return num.data;
 }
 
-static int FP2INT(int n, int d)
-{
-    while (n && n % 10 == 0) {
-        ++d;
-        n /= 10;
-    }
-    if (d == -1) {
-        n *= 10;
-        --d;
-    }
-
-    return ((n << 4) | (d & 15));
-}
-
 static int isNan(int x)
 {
     return GET_FRAC(x) == GET_FRAC(NAN_INT);
@@ -293,28 +279,15 @@ static uint64_t divid(uint64_t a, uint64_t b)
         return result << (-shift);
 }
 
-static int remain(int a, int b)
+static uint64_t remain(uint64_t a, uint64_t b)
 {
-    int frac1 = GET_FRAC(a);
-    int frac2 = GET_FRAC(b);
-    int n1 = GET_NUM(a);
-    int n2 = GET_NUM(b);
-    if (n2 == 0)
+    a = GET_NUM(a);
+    b = GET_NUM(b);
+
+    if (!b)
         return NAN_INT;
 
-    /* to int */
-    while (frac1 > 0) {
-        n1 /= 10;
-        --frac1;
-    }
-    while (frac2 > 0) {
-        n2 /= 10;
-        --frac2;
-    }
-
-    n1 %= n2;
-
-    return FP2INT(n1, frac1);
+    return a % b;
 }
 
 static uint64_t right_shift(uint64_t a, int b)
