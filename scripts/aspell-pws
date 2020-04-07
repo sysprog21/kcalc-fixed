@@ -167,3 +167,4 @@ fixedp
 calc
 Makefile
 unpatch
+PRIu64

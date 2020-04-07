@@ -20,6 +20,8 @@ MODULE_VERSION("0.1");
 #define CLASS_NAME "calc"
 #define BUFF_SIZE 256
 
+#define PRIu64 "llu"
+
 static int major;
 static char message[BUFF_SIZE] = {0};
 static short size_of_message;
@@ -61,12 +63,12 @@ static ssize_t dev_read(struct file *filep,
 
     memset(message, 0, sizeof(char) * BUFF_SIZE);
 
-    snprintf(message, 64, "%lu\n", result);
+    snprintf(message, 64, "%" PRIu64 "\n", (unsigned long long) result);
     size_of_message = strlen(message);
 
     error_count = copy_to_user(buffer, message, size_of_message);
     if (error_count == 0) {
-        pr_info("size: %d result: %llu\n", size_of_message, result);
+        pr_info("size: %d result: %" PRIu64 "\n", size_of_message, result);
         while (len && *msg_ptr) {
             error_count = put_user(*(msg_ptr++), buffer++);
             len--;
@@ -143,7 +145,7 @@ static void calc(void)
     }
 
     result = expr_eval(e);
-    pr_info("Result: %llu\n", result);
+    pr_info("Result: %" PRIu64 "\n", result);
     expr_destroy(e, &vars);
 }
 

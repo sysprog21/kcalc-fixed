@@ -308,7 +308,6 @@ static uint64_t power(uint64_t a, uint64_t b)
         a = mult(a, base);
 
     if (neg) {
-        pr_alert("is neg: %llu", a);
         return divid((uint64_t) 1 << 32, a);
     } else
         return a;
