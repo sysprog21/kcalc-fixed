@@ -21,6 +21,13 @@ load: calc.ko
 unload:
 	sudo rmmod calc
 
+patch:
+	sudo insmod livepatch-calc.ko
+
+unpatch:
+	sudo sh -c "echo 0 > /sys/kernel/livepatch/livepatch_calc/enabled"
+	sudo rmmod livepatch-calc
+
 check: all
 	scripts/test.sh
 
