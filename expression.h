@@ -69,7 +69,9 @@ static inline int vec_expand(char **buf, int *length, int *cap, int memsz)
 struct expr_func;
 typedef vec(struct expr) vec_expr_t;
 typedef void (*exprfn_cleanup_t)(struct expr_func *f, void *context);
-typedef int (*exprfn_t)(struct expr_func *f, vec_expr_t args, void *context);
+typedef uint64_t (*exprfn_t)(struct expr_func *f,
+                             vec_expr_t args,
+                             void *context);
 
 struct expr {
     int type;

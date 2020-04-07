@@ -20,7 +20,7 @@ void livepatch_nop_cleanup(struct expr_func *f, void *c)
     (void) c;
 }
 
-int livepatch_nop(struct expr_func *f, vec_expr_t args, void *c)
+uint64_t livepatch_nop(struct expr_func *f, vec_expr_t args, void *c)
 {
     (void) args;
     (void) c;
@@ -28,15 +28,15 @@ int livepatch_nop(struct expr_func *f, vec_expr_t args, void *c)
     return 0;
 }
 
-int livepatch_fib(int n)
+uint64_t livepatch_fib(int n)
 {
     if (unlikely(!n))
         return 0;
 
-    int a = 0, b = 1;
+    uint64_t a = 0, b = 1;
     for (int i = 32 - __builtin_clz(n); i >= 0; i--) {
-        int t1 = a * (2 * b - a);
-        int t2 = b * b + a * a;
+        uint64_t t1 = a * (2 * b - a);
+        uint64_t t2 = b * b + a * a;
         a = t1;
         b = t2;
         if (n & (1 << i)) {

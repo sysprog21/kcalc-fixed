@@ -107,7 +107,7 @@ noinline void user_func_nop_cleanup(struct expr_func *f, void *c)
     (void) c;
 }
 
-noinline int user_func_nop(struct expr_func *f, vec_expr_t args, void *c)
+noinline uint64_t user_func_nop(struct expr_func *f, vec_expr_t args, void *c)
 {
     (void) args;
     (void) c;
@@ -116,15 +116,15 @@ noinline int user_func_nop(struct expr_func *f, vec_expr_t args, void *c)
     return 0;
 }
 
-noinline int kfib(int n)
+noinline uint64_t kfib(uint64_t n)
 {
     return 0;
 }
 
-int user_func_fib(struct expr_func *f, vec_expr_t args, void *c)
+uint64_t user_func_fib(struct expr_func *f, vec_expr_t args, void *c)
 {
-    int n = expr_eval(&vec_nth(&args, 0));
-    return kfib(n);
+    uint64_t n = expr_eval(&vec_nth(&args, 0));
+    return kfib(n >> 32) << 32;
 }
 
 static struct expr_func user_funcs[] = {
