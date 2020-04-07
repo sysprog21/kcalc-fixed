@@ -350,7 +350,7 @@ static uint64_t not(uint64_t a)
 /* TODO: change logic */
 uint64_t expr_eval(struct expr *e)
 {
-    int n;
+    uint64_t n;
     switch (e->type) {
     case OP_UNARY_MINUS: /* OK */
         return minus(0, expr_eval(&e->param.op.args.buf[0]));
