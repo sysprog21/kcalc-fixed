@@ -7,8 +7,6 @@
 #include <linux/module.h>
 #include <linux/string.h>
 
-#define NAN_INT ((1 << 4) | ((1 << 4) - 1))
-#define INF_INT ((1 << 5) | ((1 << 4) - 1))
 #define MASK(n) (((n) > 0) << 4)
 /*
  * LSB 4 bits for precision, 2^3, one for sign
@@ -19,6 +17,9 @@
 /*
  * Expression data types
  */
+
+const uint64_t INF_INT = 4294967295;
+const uint64_t NAN_INT = 1;
 
 static uint64_t GET_NUM(uint64_t n)
 {
@@ -274,6 +275,12 @@ static uint64_t mult(uint64_t a, uint64_t b)
 
 static uint64_t divid(uint64_t a, uint64_t b)
 {
+    if (!b) {
+        if (a)
+            return INF_INT;
+        return NAN_INT;
+    }
+
     uint64_t result = 0;
     int shift = __builtin_ctzl(b);
     b >>= shift;
@@ -316,31 +323,22 @@ static uint64_t right_shift(uint64_t a, int b)
     return a >> b;
 }
 
-static int power(int a, int b)
+static uint64_t power(uint64_t a, uint64_t b)
 {
-    int frac1 = GET_FRAC(a);
-    int frac2 = GET_FRAC(b);
-    int n1 = GET_NUM(a);
-    int n2 = GET_NUM(b);
+    uint64_t base = a;
 
-    while (frac2 != 0) {
-        if (frac2 < 0) {
-            n2 /= 10;
-            ++frac2;
-        } else {
-            n2 *= 10;
-            --frac2;
-        }
-    }
+    int neg = (b >> 63) & 1;
+    if (neg)
+        b = 0 - b;
+    b >>= 32;
+    for (int i = 1; i < b; i++)
+        a = mult(a, base);
 
-    int on1 = n1;
-    int of1 = frac1;
-    n1 = 1;
-    for (int i = 0; i < n2; ++i) {
-        frac1 += of1;
-        n1 *= on1;
-    }
-    return FP2INT(n1, frac1);
+    if (neg) {
+        pr_alert("is neg: %llu", a);
+        return divid((uint64_t) 1 << 32, a);
+    } else
+        return a;
 }
 
 static uint64_t left_shift(uint64_t a, int b)
