@@ -2,7 +2,12 @@
 
 #ifdef __KERNEL__
 #include <linux/types.h>
+#else
+#include <stdint.h>
 #endif
+
+const uint64_t INF_INT = 9223372036854775808U;
+const uint64_t NAN_INT = 1U;
 
 typedef union __fixedp {
     struct {

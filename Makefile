@@ -28,8 +28,11 @@ unpatch:
 	sudo sh -c "echo 0 > /sys/kernel/livepatch/livepatch_calc/enabled"
 	sudo rmmod livepatch-calc
 
-check: all
+check: all eval
 	scripts/test.sh
+
+eval: eval.c
+	gcc -o scripts/eval eval.c $(ccflags)
 
 clean:
 	make -C $(KDIR) M=$(PWD) clean

@@ -18,9 +18,6 @@
  * Expression data types
  */
 
-const uint64_t INF_INT = 4294967295;
-const uint64_t NAN_INT = 1;
-
 static uint64_t GET_NUM(uint64_t n)
 {
     fixedp num = {.data = n};

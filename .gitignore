@@ -26,5 +26,8 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
+# fixed-point evaluator
+scripts/eval
+
 # test-oriented
 mathex/build/

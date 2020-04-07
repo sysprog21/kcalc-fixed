@@ -4,13 +4,13 @@ CALC_DEV=/dev/calc
 CALC_MOD=calc.ko
 LIVEPATCH_CALC_MOD=livepatch-calc.ko
 
-source scripts/eval.sh
+EVAL=scripts/eval
 
 test_op() {
     local expression=$1 
     echo "Testing " ${expression} "..."
     echo -ne ${expression}'\0' > $CALC_DEV
-    fromfixed $(cat $CALC_DEV)
+    $EVAL $(cat $CALC_DEV)
 }
 
 if [ "$EUID" -eq 0 ]
