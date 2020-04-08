@@ -27,7 +27,7 @@ Mkfile.old
 dkms.conf
 
 # fixed-point evaluator
-scripts/eval
+eval
 
 # test-oriented
 mathex/build/

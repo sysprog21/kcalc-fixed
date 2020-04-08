@@ -7,7 +7,7 @@ ccflags-y := -std=gnu99 -Wno-declaration-after-statement
 
 GIT_HOOKS := .git/hooks/applied
 
-all: $(GIT_HOOKS)
+all: $(GIT_HOOKS) eval
 	make -C $(KDIR) M=$(PWD) modules
 
 $(GIT_HOOKS):
@@ -28,11 +28,12 @@ unpatch:
 	sudo sh -c "echo 0 > /sys/kernel/livepatch/livepatch_calc/enabled"
 	sudo rmmod livepatch-calc
 
-check: all eval
+check: all
 	scripts/test.sh
 
 eval: eval.c
-	gcc -o scripts/eval eval.c $(ccflags)
+	gcc -o eval eval.c -std=gnu11
 
 clean:
 	make -C $(KDIR) M=$(PWD) clean
+	$(RM) eval

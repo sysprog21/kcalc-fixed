@@ -4,7 +4,7 @@ CALC_DEV=/dev/calc
 CALC_MOD=calc.ko
 LIVEPATCH_CALC_MOD=livepatch-calc.ko
 
-EVAL=scripts/eval
+EVAL=./eval
 
 test_op() {
     local expression=$1 
