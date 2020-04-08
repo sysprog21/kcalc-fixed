@@ -287,9 +287,9 @@ static uint64_t remain(uint64_t a, uint64_t b)
     return a % b;
 }
 
-static uint64_t right_shift(uint64_t a, int b)
+static uint64_t right_shift(uint64_t a, uint64_t b)
 {
-    /* FIXME: should use 2-base? */
+    b >>= 32;
     return a >> b;
 }
 
@@ -310,9 +310,9 @@ static uint64_t power(uint64_t a, uint64_t b)
         return a;
 }
 
-static uint64_t left_shift(uint64_t a, int b)
+static uint64_t left_shift(uint64_t a, uint64_t b)
 {
-    /* FIXME: should use 2-base? */
+    b >>= 32;
     return a << b;
 }
 
