@@ -32,7 +32,7 @@ check: all
 	scripts/test.sh
 
 eval: eval.c
-	gcc -o eval eval.c -std=gnu11
+	$(CC) -o eval eval.c -std=gnu11
 
 clean:
 	make -C $(KDIR) M=$(PWD) clean
