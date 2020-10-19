@@ -118,20 +118,8 @@ noinline uint64_t user_func_nop(struct expr_func *f, vec_expr_t args, void *c)
     return 0;
 }
 
-noinline uint64_t kfib(uint64_t n)
-{
-    return 0;
-}
-
-uint64_t user_func_fib(struct expr_func *f, vec_expr_t args, void *c)
-{
-    uint64_t n = expr_eval(&vec_nth(&args, 0));
-    return kfib(n >> 32) << 32;
-}
-
 static struct expr_func user_funcs[] = {
     {"nop", user_func_nop, user_func_nop_cleanup, 0},
-    {"fib", user_func_fib, 0},
     {NULL, NULL, NULL, 0},
 };
 

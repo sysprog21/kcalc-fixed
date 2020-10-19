@@ -2,7 +2,6 @@
 
 CALC_DEV=/dev/calc
 CALC_MOD=calc.ko
-LIVEPATCH_CALC_MOD=livepatch-calc.ko
 
 EVAL=./eval
 
@@ -18,7 +17,6 @@ if [ "$EUID" -eq 0 ]
   exit
 fi
 
-sudo rmmod -f livepatch-calc 2>/dev/null
 sudo rmmod -f calc 2>/dev/null
 sleep 1
 
@@ -70,17 +68,6 @@ test_op '$(number, 1), $(number, 2+3), number()' # should be 5
 
 # pre-defined function
 test_op 'nop()'
-
-# Livepatch
-sudo insmod $LIVEPATCH_CALC_MOD
-sleep 1
-echo "livepatch was applied"
-test_op 'nop()'
-dmesg | tail -n 6
-echo "Disabling livepatch..."
-sudo sh -c "echo 0 > /sys/kernel/livepatch/livepatch_calc/enabled"
-sleep 2
-sudo rmmod livepatch-calc
 
 sudo rmmod calc
 

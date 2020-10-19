@@ -1,18 +1,9 @@
 #!/usr/bin/env bash
 
-CPPCHECK_suppresses="--suppress=missingIncludeSystem --suppress=unknownEvaluationOrder"
-CPPCHECK_OPTS="-I. --enable=all --error-exitcode=1 --force $CPPCHECK_suppresses ."
-
 RETURN=0
 CLANG_FORMAT=$(which clang-format)
 if [ $? -ne 0 ]; then
     echo "[!] clang-format not installed. Unable to check source file format policy." >&2
-    exit 1
-fi
-
-CPPCHECK=$(which cppcheck)
-if [ $? -ne 0 ]; then
-    echo "[!] cppcheck not installed. Unable to perform static analysis." >&2
     exit 1
 fi
 
@@ -71,14 +62,5 @@ do
         RETURN=1
     fi
 done
-
-# static analysis
-$CPPCHECK $CPPCHECK_OPTS >/dev/null
-if [ $? -ne 0 ]; then
-    RETURN=1
-    echo "" >&2
-    echo "Fail to pass static analysis." >&2
-    echo
-fi
 
 exit $RETURN
