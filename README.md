@@ -11,16 +11,7 @@ input, returning fixed-point numbers.
 
 ## Fixed-point representation
 
-kcalc introduces a fixed-point number representation for fractional values:
-one 32-bit size is divided into mantissa (28 bits), sign (1 bit) and
-exponent (3 bits).
-
-```
-MSB   31                               4    3   2    1   0  LSB
-     +----------------------------------+------+----------+
-     |     mantissa                     | sign | exponent |
-     +----------------------------------+------+----------+
-```
+kcalc introduces a fixed-point number representation for fractional values.
 
 ## Usage:
 
@@ -42,17 +33,16 @@ The expected output in `dmesg` should be:
 
 ```shell
 calc: Received 3 -> 3*5
-Result: 240
+Result: 64424509440
 ```
 
 The result seems incorrect since we do not transform the value to normal representation.
 You can use the utlity to convert values into human readable form:
 ```shell
-$ source scripts/eval.sh
-$ fromfixed 240
+$ ./eval 64424509440
 ```
 
-Then, you can get `15`, which is the exact result of expression `3*5`.
+Then, you can get `15.000000`, which is the exact result of expression `3*5`.
 
 You can check file `scripts/test.sh` for more examples about the expressions. Alteratively,
 execue `make check` for the same script.
